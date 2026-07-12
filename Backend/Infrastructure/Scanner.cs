@@ -33,10 +33,25 @@ public class Scanner : BackgroundService
         while(!stoppingToken.IsCancellationRequested)
         {
             var currentLinks = new HashSet<string>();
+            Dictionary<string, bool> databaseLinks = new Dictionary<string, bool>();
 
             try
             {
                 using HttpClient client = _httpClientFactory.CreateClient("ScraperClient");
+
+                await using(var conn = await _postgresql.GetOpenConnectionAsync())
+                {
+                    await using(var linksQuery = new NpgsqlCommand("SELECT url FROM products", conn))
+                    {
+                        await using(var reader = await linksQuery.ExecuteReaderAsync())
+                        {
+                            while(await reader.ReadAsync())
+                            {
+                                databaseLinks[reader.GetString(reader.GetOrdinal("url"))] = false;
+                            }
+                        }
+                    }
+                }
 
                 int offset = 0;
 
@@ -54,6 +69,7 @@ public class Scanner : BackgroundService
                     foreach(var product in products)
                     {
                         currentLinks.Add(product.GetAttribute("href"));
+                        databaseLinks[product.GetAttribute("href")] = true;
                     }
 
                     var button = document.QuerySelector("a[rel='next']");
@@ -79,6 +95,11 @@ public class Scanner : BackgroundService
                         var description = productDocument.QuerySelector(".mb-3.rtif-content");
                         var title = productDocument.QuerySelector(".uad-content-block");
                         var frozen = productDocument.QuerySelectorAll(".fa.fa-snowflake.fa-fw");
+
+                        if(price == null)
+                        {
+                            continue;
+                        }
                         
                         string priceRaw = Regex.Replace(price.TextContent, @"[^\d]", "");
                         string titleText = title.TextContent.Trim();
@@ -144,6 +165,22 @@ public class Scanner : BackgroundService
                     catch(Exception ex)
                     {
                         Console.WriteLine($"Hiba a link feldolgozása során ({link}): {ex.Message}");
+                    }
+                }
+
+                foreach(var link in databaseLinks)
+                {
+                    if(!link.Value)
+                    {
+                        await using(var conn = await _postgresql.GetOpenConnectionAsync())
+                        {
+                            await using(var deleteLink = new NpgsqlCommand("DELETE FROM products WHERE url = @url", conn))
+                            {
+                                deleteLink.Parameters.AddWithValue("url", link.Key);
+
+                                await deleteLink.ExecuteNonQueryAsync();
+                            }
+                        }
                     }
                 }
 
