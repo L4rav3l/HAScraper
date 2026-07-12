@@ -1,14 +1,14 @@
-namespace HAScraper.Infrastructure;
+namespace HAScraper.Request;
 
 public class ProductsRequest
 {
-    private required int Id {get;set;}
-    private required string Url {get;set;}
-    private required int Price {get;set;}
-    private string cpu {get;set;}
-    private int memory {get;set;}
-    private string ddr {get;set;}
-    private string drive {get;set;}
-    private required string bargain {get;set;}
-    private required bool frozen {get;set;}
+    public required int Id {get;set;}
+    public required string Url {get;set;}
+    public required int Price {get;set;}
+    public string? Cpu {get;set;}
+    public int? Memory {get;set;}
+    public string? Ddr {get;set;}
+    public string? Drive {get;set;}
+    public required string Bargain {get;set;}
+    public required bool Frozen {get;set;}
 }

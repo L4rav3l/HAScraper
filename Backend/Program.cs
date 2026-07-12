@@ -10,7 +10,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddSingleton<Postgresql>();
 
-builder.Services.AddHostedService<Scanner>();
+//builder.Services.AddHostedService<Scanner>();
 
 var app = builder.Build();
 
