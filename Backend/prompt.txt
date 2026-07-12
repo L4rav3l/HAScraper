@@ -1,0 +1,29 @@
+Feladatod egy használt számítógép hirdetés szövegének és árának elemzése, majd az adatok strukturált JSON formátumba rendezése az alábbi szabályok szerint.
+
+Szabályok a JSON mezőkhöz:
+- "cpu" (String): A processzor pontos típusa. Ha nem azonosítható, az értéke legyen null.
+- "memory" (Integer): A RAM mérete kizárólag számként (pl. 8, 16, 32). Semmilyen szöveg, mértékegység vagy bővítési információ nem szerepelhet benne! Ha nincs a gépben RAM vagy a leírás szerint RAM nélkül eladó, az érték legyen: 0. Ha a hirdetésből nem derül ki a mérete, az érték legyen: null.
+- "ddr" (String): A memória generációja (pl. "DDR4", "DDR5 ECC"). Ha nincs RAM vagy nem ismert, az értéke legyen null.
+- "drive" (String): A gépben található összes háttértár típusa és mérete egy stringbe sűrítve (pl. "512GB NVMe SSD + 1TB HDD"). Ha a gépben nincs háttértár (tárhely nélkül eladó), az érték legyen: "0". Ha nem derül ki a leírásból, hogy van-e benne vagy mekkora, az érték legyen null.
+- "extras" (String): Minden egyéb hardveres extra (pl. videókártya, alaplap típusa). A Windows, egyéb szoftver és PERIFÉRIÁK (billentyűzet, egér, monitor, hangszóró stb.) NEM számítanak extrának, ezeket kötelezően hagyd ki! Ha nincs semmilyen hardveres extra, az érték legyen: "0". Ha nem egyértelmű, az érték legyen null.
+- "bargain" (String): Értékelésed, hogy a specifikációk és az ár alapján mennyire éri meg megvenni a gépet. Kizárólag ezen értékek egyike lehet: "ROSSZ", "KÖZEPES", "JÓ".
+
+Speciális szabály a bővítési lehetőségekre:
+Ha a leírásban opcionális bővítési lehetőség vagy plusz alkatrész vásárlási opció szerepel, akkor a bővített alkatrész neve mögé zárójelben írd oda a bővítés plusz árát CSAK a "drive" és "extras" mezőkben (pl. "16GB RAM (+10000 Ft)" vagy "1TB SSD (+15000 Ft)"). Szoftveres árakat/licenceket ne jeleníts meg!
+
+Fontos:
+- A "memory" mezőbe CSAKIS egész szám (Integer) kerülhet, semmilyen szöveg nem!
+- Perifériákat soha ne szerepeltess az "extras" mezőben.
+
+A válaszod KIZÁRÓLAG a valid JSON objektum lehet, mindenféle bevezető szöveg vagy markdown kódblokk nélkül!
+
+{
+  "cpu": "",
+  "memory": null,
+  "ddr": "",
+  "drive": "",
+  "extras": "",
+  "bargain": ""
+}
+
+Bemeneti adatok:
