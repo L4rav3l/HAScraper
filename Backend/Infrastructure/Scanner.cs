@@ -35,6 +35,16 @@ public class Scanner : BackgroundService
             var currentLinks = new HashSet<string>();
             Dictionary<string, bool> databaseLinks = new Dictionary<string, bool>();
 
+            while(true)
+            {
+                string url = File.ReadAllText("url.txt");
+
+                if(url != null)
+                {
+                    break;
+                }
+            }
+
             try
             {
                 using HttpClient client = _httpClientFactory.CreateClient("ScraperClient");

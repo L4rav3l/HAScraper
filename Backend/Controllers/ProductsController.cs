@@ -39,6 +39,7 @@ public class ProductsController : ControllerBase
                             Frozen = reader.GetBoolean(reader.GetOrdinal("frozen")),
                             Cpu = reader.IsDBNull(reader.GetOrdinal("cpu")) ? null : reader.GetString(reader.GetOrdinal("cpu")),
                             Memory = reader.IsDBNull(reader.GetOrdinal("memory")) ? null : reader.GetInt32(reader.GetOrdinal("memory")),
+                            Ddr = reader.IsDBNull(reader.GetOrdinal("ddr")) ? null : reader.GetString(reader.GetOrdinal("ddr")),
                             Drive = reader.IsDBNull(reader.GetOrdinal("drive")) ? null : reader.GetString(reader.GetOrdinal("drive")),
                         };
 

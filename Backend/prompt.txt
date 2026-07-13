@@ -1,29 +1,26 @@
 Feladatod egy használt számítógép hirdetés szövegének és árának elemzése, majd az adatok strukturált JSON formátumba rendezése az alábbi szabályok szerint.
-
 Szabályok a JSON mezőkhöz:
-- "cpu" (String): A processzor pontos típusa. Ha nem azonosítható, az értéke legyen null.
-- "memory" (Integer): A RAM mérete kizárólag számként (pl. 8, 16, 32). Semmilyen szöveg, mértékegység vagy bővítési információ nem szerepelhet benne! Ha nincs a gépben RAM vagy a leírás szerint RAM nélkül eladó, az érték legyen: 0. Ha a hirdetésből nem derül ki a mérete, az érték legyen: null.
-- "ddr" (String): A memória generációja (pl. "DDR4", "DDR5 ECC"). Ha nincs RAM vagy nem ismert, az értéke legyen null.
-- "drive" (String): A gépben található összes háttértár típusa és mérete egy stringbe sűrítve (pl. "512GB NVMe SSD + 1TB HDD"). Ha a gépben nincs háttértár (tárhely nélkül eladó), az érték legyen: "0". Ha nem derül ki a leírásból, hogy van-e benne vagy mekkora, az érték legyen null.
-- "extras" (String): Minden egyéb hardveres extra (pl. videókártya, alaplap típusa). A Windows, egyéb szoftver és PERIFÉRIÁK (billentyűzet, egér, monitor, hangszóró stb.) NEM számítanak extrának, ezeket kötelezően hagyd ki! Ha nincs semmilyen hardveres extra, az érték legyen: "0". Ha nem egyértelmű, az érték legyen null.
-- "bargain" (String): Értékelésed, hogy a specifikációk és az ár alapján mennyire éri meg megvenni a gépet. Kizárólag ezen értékek egyike lehet: "ROSSZ", "KÖZEPES", "JÓ".
 
-Speciális szabály a bővítési lehetőségekre:
-Ha a leírásban opcionális bővítési lehetőség vagy plusz alkatrész vásárlási opció szerepel, akkor a bővített alkatrész neve mögé zárójelben írd oda a bővítés plusz árát CSAK a "drive" és "extras" mezőkben (pl. "16GB RAM (+10000 Ft)" vagy "1TB SSD (+15000 Ft)"). Szoftveres árakat/licenceket ne jeleníts meg!
+"cpu" (String): A processzor pontos típusa. Bővítési lehetőség vagy csere opció ide soha nem kerülhet! Ha nem azonosítható, null.
+"memory" (Integer): A RAM mérete kizárólag számként (pl. 8, 16, 32). Semmilyen szöveg, plusz jel vagy bővítési információ nem szerepelhet benne! Ha nincs RAM → 0. Ha nem derül ki → null.
+"ddr" (String): A memória generációja. Ha nincs vagy nem ismert → null.
+"drive" (String): A gépben található összes háttértár típusa és mérete. Bővítési lehetőség ide soha nem kerülhet! Ha nincs tárhely → "0". Ha nem derül ki → null.
+"extras" (String): Minden egyéb hardveres extra és minden bővítési lehetőség. Csak ide írhatod a plusz alkatrészeket és az árukat.
+"bargain" (String): Csak "ROSSZ", "KÖZEPES", "JÓ".
 
-Fontos:
-- A "memory" mezőbe CSAKIS egész szám (Integer) kerülhet, semmilyen szöveg nem!
-- Perifériákat soha ne szerepeltess az "extras" mezőben.
-
-A válaszod KIZÁRÓLAG a valid JSON objektum lehet, mindenféle bevezető szöveg vagy markdown kódblokk nélkül!
-
+Kritikus, szigorú szabály:
+Bővítési lehetőség (csere, upgrade, plusz alkatrész opció) KIZÁRÓLAG az "extras" mezőbe kerülhet!
+Sem a cpu, sem a memory, sem a drive, sem a ddr mezőbe semmilyen formában nem írhatsz bővítést, plusz árat vagy zárójelet.
+Helyes példa:
 {
-  "cpu": "",
-  "memory": null,
-  "ddr": "",
-  "drive": "",
-  "extras": "",
-  "bargain": ""
+  "cpu": "Intel Core i5-7500",
+  "memory": 8,
+  "ddr": "DDR4",
+  "drive": "0",
+  "extras": "Intel HD Graphics 630 + i7-7700 CPU csere lehetőség (+17000 Ft) + 128GB SATA SSD (+4000 Ft) + 256GB SATA SSD (+8000 Ft) + 500GB SATA SSD (+16000 Ft) + 256GB NVMe M.2 SSD (+8000 Ft) + 512GB NVMe M.2 SSD (+18000 Ft) + 16GB RAM bővítés (+12000 Ft) + 32GB RAM bővítés (+36000 Ft) + PCI-E M.2 WIFI+BT kártya (+3000 Ft)",
+  "bargain": "JÓ"
 }
-
-Bemeneti adatok:
+Tiltott (rossz) példák – ezeket soha ne csináld:
+  "cpu": "Intel Core i5-7500 (+17000 Ft i7-7700-ra váltás)",   // ← TILOS!
+  "drive": "0 (+4000 Ft 128GB SATA SSD ...)",                 // ← TILOS!
+A válaszod KIZÁRÓLAG a valid JSON objektum legyen amiben egyedül csak 1 gép adatai lehetnek, semmi más szöveg nélkül!

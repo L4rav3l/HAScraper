@@ -26,4 +26,11 @@ public class UrlController : ControllerBase
 
         return Ok();
     }
+
+    [HttpGet("api/url")]
+    public async Task<IActionResult> GetUrl()
+    {
+        string url = System.IO.File.ReadAllText("url.txt");
+        return Ok(url);
+    }
 }

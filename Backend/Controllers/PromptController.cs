@@ -25,4 +25,11 @@ public class PromptController : ControllerBase
 
         return Ok();
     }
+
+    [HttpGet("api/prompt")]
+    public async Task<IActionResult> GetPrompt()
+    {
+        string prompt = System.IO.File.ReadAllText("prompt.txt");
+        return Ok(prompt);
+    }
 }
