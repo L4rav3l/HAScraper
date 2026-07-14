@@ -19,3 +19,7 @@ This project automatically scrapes **HardverApro** every hour and presents the p
 git clone https://github.com/L4rav3l/HAScraper
 cd HAScraper
 docker compose up -d
+```
+
+After the containers start, the application will be available at:
+http://localhost:8000
