@@ -16,7 +16,7 @@ function Settings()
         const handlePrompt = async () => {
             try
             {
-                const response = await axios.get("http://localhost:5204/api/prompt")
+                const response = await axios.get("/api/prompt")
                 setPrompt(response.data);
             }
             catch(ex)
@@ -28,7 +28,7 @@ function Settings()
         const handleURL = async () => {
             try
             {
-                const response = await axios.get("http://localhost:5204/api/url")
+                const response = await axios.get("/api/url")
                 setLink(response.data);
             }
             catch(ex)
@@ -46,7 +46,7 @@ function Settings()
         {
             setURLLoading(true);
 
-            const response = await axios.post("http://localhost:5204/api/url", {Url : link});
+            const response = await axios.post("/api/url", {Url : link});
         }
         catch(ex)
         {
@@ -63,7 +63,7 @@ function Settings()
         {
             setPromptLoading(true);
 
-            const response = await axios.post("http://localhost:5204/api/prompt", {Prompt : prompt});
+            const response = await axios.post("/api/prompt", {Prompt : prompt});
         }
         catch(ex)
         {
@@ -78,7 +78,7 @@ function Settings()
     const handleDelete = async () => {
         try
         {
-            const response = await axios.delete("http://localhost:5204/api/products");
+            const response = await axios.delete("/api/products");
         }
         catch(ex)
         {
@@ -91,13 +91,13 @@ function Settings()
 
             <div class="flex flex-col bg-white/10 w-[600px] p-2 rounded-lg gap-2">
                 <span class="text-xl text-white font-semibold text-center">Change URL</span>
-                <input class="w-auto h-8 rounded-lg p-2"  value={link} onChange={(e) => (setLink(e.target.value))}/>
+                <input class="w-auto h-8 rounded-lg p-2 bg-white/10 backdrop-blur text-white"  value={link} onChange={(e) => (setLink(e.target.value))}/>
                 <button class="bg-white/10 p-2 text-white rounded-lg hover:[transform:scale(1.01)]" disabled={urlLoading} onClick={() => {handleURLUpdate()}}>Change</button>
             </div>
         
             <div class="flex flex-col bg-white/10 w-[600px] p-2 rounded-lg gap-2">
                 <span class="text-xl text-white font-semibold text-center">Change Prompts</span>
-                <textarea class="w-auto h-64 rounded-lg p-2" value={prompt} onChange={(e) => {setPrompt(e.target.value)}}/>
+                <textarea class="w-auto h-64 rounded-lg p-2 bg-white/10 backdrop-blur text-white" value={prompt} onChange={(e) => {setPrompt(e.target.value)}}/>
                 <button class="bg-white/10 p-2 text-white rounded-lg hover:[transform:scale(1.01)]" disabled={promptLoading} onClick={() => {handlePromptUpdate()}}>Change</button>
             </div>
 

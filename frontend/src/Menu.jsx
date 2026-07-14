@@ -17,9 +17,6 @@ function Menu() {
                 <div class="bg-white/10 w-max p-1 rounded-lg cursor-pointer hover:[transform:scale(1.1)]" onClick={() => setPage(1)}>
                     <RiSettings2Fill size={24} class="text-white"/>
                 </div>
-                <div class="bg-white/10 w-max p-1 rounded-lg cursor-pointer hover:[transform:scale(1.1)]" onClick={() => setPage(2)}>
-                    <RiRobot2Fill size={24} class="text-white"/>
-                </div>
             </div>
 
             {page === 0 && <Home />}

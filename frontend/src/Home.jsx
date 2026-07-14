@@ -20,7 +20,7 @@ function Home()
         const fetchProducts = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get("http://localhost:5204/api/products");
+                const response = await axios.get("/api/products");
                     
                 setProduct(response.data);
             } catch (err) {

@@ -1,5 +1,5 @@
 using DotNetEnv;
-using HAScraper.Infrastructure;;
+using HAScraper.Infrastructure;
 
 Env.Load();
 

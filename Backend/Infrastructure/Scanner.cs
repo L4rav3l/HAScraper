@@ -29,6 +29,16 @@ public class Scanner : BackgroundService
     {
         var googleAI = new GoogleAI(_geminiApi);
         var model = googleAI.GenerativeModel("gemini-3.1-flash-lite");
+
+        if (!File.Exists("url.txt"))
+        {
+            File.WriteAllText("url.txt", "");
+        }
+
+        if (!File.Exists("prompt.txt"))
+        {
+            File.WriteAllText("prompt.txt", "");
+        }
     
         while(!stoppingToken.IsCancellationRequested)
         {
